@@ -19,8 +19,9 @@
 
 HttpManager::HttpManager(QString f, bool u) : QObject(nullptr)
 {
-	m_qnam = new QNetworkAccessManager(this);
-	QObject::connect(m_qnam, SIGNAL(finished(QNetworkReply*)), this, SLOT(http_finished(QNetworkReply*)));
+    m_qnam = new QNetworkAccessManager(this);
+    QObject::connect(m_qnam, SIGNAL(finished(QNetworkReply*)), this, SLOT(http_finished(QNetworkReply*)));
+    QObject::connect(m_qnam, SIGNAL(error(QNetworkReply::NetworkError)), SLOT(error(QNetworkReply::NetworkError)));
 	m_config_path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
 	m_url = u;
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_WIN)
@@ -37,17 +38,22 @@ void HttpManager::process()
 void HttpManager::doRequest()
 {
 	if(m_url){
-		m_qnam->get(QNetworkRequest(QUrl(m_filename)));
+        m_qnam->get(QNetworkRequest(QUrl(m_filename)));
 	}
 	else{
 		m_qnam->get(QNetworkRequest(QUrl("http://freedmr.lanealucy.de" + m_filename)));
 	}
 }
 
+void HttpManager::error(QNetworkReply::NetworkError code) {
+    qDebug() << "QNetworkReply::NetworkError " << code << "received";
+}
+
 void HttpManager::http_finished(QNetworkReply *reply)
 {
     //qDebug() << "http_finished() called";
 	if (reply->error()) {
+        qDebug() << "QNetworkReply::NetworkError " << reply->error() << "received";
 		reply->deleteLater();
 		reply = nullptr;
 		qDebug() << "http_finished() error()";

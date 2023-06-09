@@ -8,7 +8,7 @@ unix:!ios:QT += serialport
 CONFIG += c++11
 LFLAGS +=
 android:INCLUDEPATH += $$(HOME)/Android/android-build/include
-LIBS += -limbe_vocoder # -lvocoder
+LIBS += -L$$PWD/imbe_vocoder # -lvocoder
 !win32:LIBS += -ldl
 win32:QT += serialport
 win32:INCLUDEPATH += /mnt/data/src/winlibs/include
@@ -61,6 +61,33 @@ HEADERS += \
 	httpmanager.h \
 	iax.h \
 	iaxdefines.h \
+    imbe_vocoder/aux_sub.h \
+    imbe_vocoder/basic_op.h \
+    imbe_vocoder/ch_decode.h \
+    imbe_vocoder/ch_encode.h \
+    imbe_vocoder/dc_rmv.h \
+    imbe_vocoder/decode.h \
+    imbe_vocoder/dsp_sub.h \
+    imbe_vocoder/encode.h \
+    imbe_vocoder/globals.h \
+    imbe_vocoder/imbe.h \
+    imbe_vocoder/imbe_vocoder.h \
+    imbe_vocoder/imbe_vocoder_impl.h \
+    imbe_vocoder/math_sub.h \
+    imbe_vocoder/pe_lpf.h \
+    imbe_vocoder/pitch_est.h \
+    imbe_vocoder/pitch_ref.h \
+    imbe_vocoder/qnt_sub.h \
+    imbe_vocoder/rand_gen.h \
+    imbe_vocoder/sa_decode.h \
+    imbe_vocoder/sa_encode.h \
+    imbe_vocoder/sa_enh.h \
+    imbe_vocoder/tbls.h \
+    imbe_vocoder/typedef.h \
+    imbe_vocoder/typedefs.h \
+    imbe_vocoder/uv_synt.h \
+    imbe_vocoder/v_synt.h \
+    imbe_vocoder/v_uv_det.h \
 	m17.h \
 	mode.h \
 	nxdn.h \
@@ -68,7 +95,8 @@ HEADERS += \
 	ref.h \
 	vocoder_plugin.h \
 	xrf.h \
-	ysf.h
+        ysf.h \
+        imbe_vocoder/imbe_vocoder_api.h
 android:HEADERS += androidserialport.h
 macx:HEADERS += micpermission.h
 !ios:HEADERS += serialambe.h serialmodem.h
@@ -90,6 +118,29 @@ SOURCES += \
 	droidstar.cpp \
 	httpmanager.cpp \
 	iax.cpp \
+	imbe_vocoder/aux_sub.cc \
+	imbe_vocoder/basicop2.cc \
+	imbe_vocoder/ch_decode.cc \
+	imbe_vocoder/ch_encode.cc \
+	imbe_vocoder/dc_rmv.cc \
+	imbe_vocoder/decode.cc \
+	imbe_vocoder/dsp_sub.cc \
+	imbe_vocoder/encode.cc \
+	imbe_vocoder/imbe_vocoder.cc \
+	imbe_vocoder/imbe_vocoder_impl.cc \
+	imbe_vocoder/math_sub.cc \
+	imbe_vocoder/pe_lpf.cc \
+	imbe_vocoder/pitch_est.cc \
+	imbe_vocoder/pitch_ref.cc \
+	imbe_vocoder/qnt_sub.cc \
+	imbe_vocoder/rand_gen.cc \
+	imbe_vocoder/sa_decode.cc \
+	imbe_vocoder/sa_encode.cc \
+	imbe_vocoder/sa_enh.cc \
+	imbe_vocoder/tbls.cc \
+	imbe_vocoder/uv_synt.cc \
+	imbe_vocoder/v_synt.cc \
+	imbe_vocoder/v_uv_det.cc \
 	m17.cpp \
 	main.cpp \
 	mode.cpp \
@@ -144,7 +195,32 @@ DISTFILES += \
 	android/gradlew \
 	android/gradlew.bat \
 	android/res/values/libs.xml \
-	images/log.png
+	images/log.png \
+	imbe_vocoder/README.md \
+	imbe_vocoder/aux_sub.d \
+	imbe_vocoder/basicop2.d \
+	imbe_vocoder/ch_decode.d \
+	imbe_vocoder/ch_encode.d \
+	imbe_vocoder/dc_rmv.d \
+	imbe_vocoder/decode.d \
+	imbe_vocoder/dsp_sub.d \
+	imbe_vocoder/encode.d \
+	imbe_vocoder/imbe_vocoder.d \
+	imbe_vocoder/imbe_vocoder_impl.d \
+	imbe_vocoder/libimbe_vocoder.a \
+	imbe_vocoder/math_sub.d \
+	imbe_vocoder/pe_lpf.d \
+	imbe_vocoder/pitch_est.d \
+	imbe_vocoder/pitch_ref.d \
+	imbe_vocoder/qnt_sub.d \
+	imbe_vocoder/rand_gen.d \
+	imbe_vocoder/sa_decode.d \
+	imbe_vocoder/sa_encode.d \
+	imbe_vocoder/sa_enh.d \
+	imbe_vocoder/tbls.d \
+	imbe_vocoder/uv_synt.d \
+	imbe_vocoder/v_synt.d \
+	imbe_vocoder/v_uv_det.d
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
 	LIBS += -L$$(HOME)/Android/local/lib
@@ -165,3 +241,6 @@ contains(DEFINES, USE_FLITE){
 	LIBS += -lflite_cmu_us_slt -lflite_cmu_us_kal16 -lflite_cmu_us_awb -lflite_cmu_us_rms -lflite_usenglish -lflite_cmulex -lflite -lasound
 }
 ios:HEADERS += micpermission.h
+
+INCLUDEPATH += $$PWD/imbe_vocoder
+DEPENDPATH += $$PWD/imbe_vocoder

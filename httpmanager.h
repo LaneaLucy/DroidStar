@@ -29,7 +29,7 @@ public:
 	//void start_request(QString file);
 
 signals:
-	void file_downloaded(QString);
+    void file_downloaded(QString);
 
 private:
 	QString m_filename;
@@ -40,7 +40,8 @@ private:
 private slots:
 	void process();
 	void doRequest();
-	void http_finished(QNetworkReply *reply);
+    void error(QNetworkReply::NetworkError code);
+    void http_finished(QNetworkReply *reply);
 };
 
 #endif // HTTPMANAGER_H
